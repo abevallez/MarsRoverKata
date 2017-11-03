@@ -5,7 +5,14 @@ public class RoverAPI {
         this.rover = rover;
     }
 
-    public void execute(String command) {
-        rover.rotateRight();
+    public void execute(String commands) {
+        String[] commandsSplit = commands.split(",");
+        for (String command: commandsSplit) {
+            if ("l".equals(command)) {
+                rover.rotateLeft();
+            }
+            rover.rotateRight();
+        }
+
     }
 }
