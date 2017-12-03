@@ -6,13 +6,22 @@ public class RoverAPI {
     }
 
     public void execute(String commands) {
-        String[] commandsSplit = commands.split(",");
-        for (String command: commandsSplit) {
-            if ("l".equals(command)) {
-                rover.rotateLeft();
+        char[] commandsSplit = commands.toCharArray();
+        for (char command: commandsSplit) {
+            switch (command) {
+                case 'l':
+                    rover.rotateLeft();
+                    break;
+                case 'r':
+                    rover.rotateRight();
+                    break;
+                case 'f':
+                    rover.moveForward();
+                    break;
+                case 'b':
+                    rover.moveBackward();
+                    break;
             }
-            rover.rotateRight();
         }
-
     }
 }

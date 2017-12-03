@@ -6,17 +6,15 @@ public class Rover {
     private static final Character EAST = 'E';
 
     private Character direction;
-    private Integer[] coordinates = new Integer[2];
+    private Coordinates position;
 
     public Rover() {
-        this.coordinates[0] = 0;
-        this.coordinates[1] = 0;
+        this.position = new Coordinates(0,0);
         this.direction = NORTH;
     }
 
-    public Rover(Integer x, Integer y, Character direction) {
-        this.coordinates[0] = x;
-        this.coordinates[1] = y;
+    public Rover(Coordinates position, Character direction) {
+        this.position = position;
         this.direction = direction;
     }
 
@@ -44,13 +42,67 @@ public class Rover {
         }
     }
 
+    public void moveForward() {
+        switch (this.direction) {
+            case 'N':
+                this.position = this.position.setY(this.position.getY() + 1);
+                break;
+            case 'W':
+                this.position = this.position.setX(this.position.getX() + 1);
+                break;
+            case 'E':
+                this.position = this.position.setX(this.position.getX() - 1);
+                break;
+            case 'S':
+                this.position = this.position.setY(this.position.getY() - 1);
+                break;
+        }
+
+        this.wrapXAxis();
+        this.wrapYAxis();
+    }
+
+    public void moveBackward() {
+        switch (getDirection()) {
+            case 'N':
+                this.position = this.position.setY(this.position.getY() - 1);
+                break;
+            case 'W':
+                this.position = this.position.setX(this.position.getX() - 1);
+                break;
+            case 'E':
+                this.position = this.position.setX(this.position.getX() + 1);
+                break;
+            case 'S':
+                this.position = this.position.setY(this.position.getY() + 1);
+                break;
+        }
+
+        this.wrapYAxis();
+        this.wrapXAxis();
+    }
+
+    private void wrapYAxis() {
+        if (this.position.getX() == 10) {
+            this.position = this.position.setX(0);
+        } else if (this.position.getX() == -1) {
+            this.position = this.position.setX(9);
+        }
+    }
+
+    private void wrapXAxis() {
+        if (this.position.getY() == 10) {
+            this.position = this.position.setY(0);
+        } else if (this.position.getY() == -1) {
+            this.position = this.position.setY(9);
+        }
+    }
+
     public Character getDirection() {
-        return direction;
+        return this.direction;
     }
 
-    public Integer[] getCoordinates() {
-        return coordinates;
+    public Coordinates getPosition() {
+        return this.position;
     }
-
-
 }
